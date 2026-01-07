@@ -216,14 +216,14 @@
     </a>
 
     <!-- Delete (ONLY if pending) -->
-    <?php if ($order->getStatus() === 'pending'): ?>
-        <a href="index.php?route=client/delete-order&id=<?= $order->getId() ?>"
-           class="btn btn-sm btn-light rounded-circle text-danger"
-           title="Supprimer"
-           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
-            <i class="bi bi-trash"></i>
-        </a>
-    <?php endif; ?>
+<a href="index.php?route=client/delete-order&id=<?= $order->getId() ?>"
+   class="btn btn-sm btn-light rounded-circle text-danger"
+   title="Supprimer"
+   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
+    <i class="bi bi-trash"></i>
+</a>
+
+
 
 </td>
 

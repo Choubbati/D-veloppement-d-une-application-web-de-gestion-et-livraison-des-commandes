@@ -8,13 +8,13 @@ require_once __DIR__ . '/../model/Order.php';
 class ClientController {
 
    
-    private $pdo;
-    private OrderRepository $orderRepo;
+    private PDO $pdo;
+    private OrderRepository $orderRepository;
 
     public function __construct(PDO $pdo)
     {
-
-        $this->orderRepo = new OrderRepository($pdo);
+        $this->pdo=$pdo;
+        $this->orderRepository = new OrderRepository($pdo);
     }
 
     
@@ -25,10 +25,10 @@ class ClientController {
             exit();
         }
         $clientId = $_SESSION['user']['id'];
-        $orders = $this->orderRepo->findByClient($clientId);
-        $pendingCount = $this->orderRepo->countPendingByClient($clientId);
-        $livreCount = $this->orderRepo->countLivreeByLivreur($clientId);
-        $priceCount = $this->orderRepo->countPrice($clientId);
+        $orders = $this->orderRepository->findByClient($clientId);
+        $pendingCount = $this->orderRepository->countPendingByClient($clientId);
+        $livreCount = $this->orderRepository->countLivreeByLivreur($clientId);
+        $priceCount = $this->orderRepository->countPrice($clientId);
 
 
         require __DIR__ . '/../views/client/dashboard.php';
@@ -41,7 +41,7 @@ class ClientController {
             exit();
         }
         $clientId = $_SESSION['user']['id'];
-        $orders = $this->orderRepo->findAll($clientId);
+        $orders = $this->orderRepository->findAll($clientId);
     
     require __DIR__ . '/../views/client/orders.php';
 
@@ -70,29 +70,66 @@ class ClientController {
             ];
 
             $order = new Order($data);
-            $this->orderRepo->createOrder($order);
+            $this->orderRepository->createOrder($order);
             
             header("Location: index.php?route=client/dashboard");
             exit;
         }
     }
 
-    public function orderDetail(){
-        
-        $clientId = $_SESSION['user']['id'];
-        $order = $this->orderRepo->findByClient($clientId);
-        require_once __DIR__ . '/../views/client/order-detail.php';
-
-    }
 
     public function ordersPage() {
     session_start();
     $clientId = $_SESSION['user']['id'];
-    $orders = $this->orderRepo->findByClient($clientId);
+    $orders = $this->orderRepository->findByClient($clientId);
 
     require_once __DIR__ . '/../views/client/orders.php';
 }
 
+    public function orderDetail()
+    {
+        if (!isset($_GET['id'])) {
+            die('ID commande manquant');
+        }
 
-    
+        $orderId  = (int) $_GET['id'];
+        $clientId = $_SESSION['user']['id'];
+
+        $order = $this->orderRepository->findByIdAndClient($orderId, $clientId);
+
+        if (!$order) {
+            die('Commande introuvable');
+        }
+
+        require_once __DIR__ . '/../views/client/order-detail.php';
+    }
+
+    public function deleteOrder()
+{
+    if (!isset($_GET['id'])) {
+        header('Location: index.php?route=client/orders');
+        exit;
+    }
+
+    $orderId = (int) $_GET['id'];
+    $clientId = $_SESSION['user']['id']; 
+
+    // Soft delete
+    $stmt = $this->pdo->prepare("
+        UPDATE orders
+        SET is_deleted = 1
+        WHERE id = :id AND client_id = :client_id
+    ");
+
+    $stmt->execute([
+        'id' => $orderId,
+        'client_id' => $clientId
+    ]);
+
+    header('Location: index.php?route=client/orders');
+    exit;
 }
+
+
+
+   }

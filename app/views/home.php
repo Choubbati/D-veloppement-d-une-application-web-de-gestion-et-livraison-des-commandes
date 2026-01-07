@@ -29,11 +29,11 @@
                         <a class="nav-link fw-medium" href="#features">Fonctionnalités</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium" href="/test_delevri/public/index.php?route=login">Se connecter</a>
+                        <a class="nav-link fw-medium" href="/gestion_livraison/public/index.php?route=login">Se connecter</a>
 
                     </li>
                     <li class="nav-item">
-<a class="btn btn-primary px-4 rounded-pill fw-bold" href="/test_delevri/public/index.php?route=register">S'inscrire</a>
+<a class="btn btn-primary px-4 rounded-pill fw-bold" href="/gestion_livraison/public/index.php?route=register">S'inscrire</a>
                     </li>
                 </ul>
             </div>

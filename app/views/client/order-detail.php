@@ -113,9 +113,23 @@
                                 <li class="breadcrumb-item active" aria-current="page">#CMD-2024-001</li>
                             </ol>
                         </nav>
-                        <h1 class="h2 fw-bold text-dark">Détail Commande <span
-                                class="badge bg-warning text-dark ms-2 rounded-pill fs-6 fw-normal">En attente</span>
-                        </h1>
+                        <h1 class="h2 fw-bold text-dark">
+    Détail Commande
+    <?php
+        $status = $order->getStatus();
+        if ($status === 'pending') {
+            $badge = 'bg-warning text-dark';
+        } elseif ($status === 'livrée') {
+            $badge = 'bg-success';
+        } else {
+            $badge = 'bg-primary';
+        }
+    ?>
+    <span class="badge <?= $badge ?> ms-2 rounded-pill fs-6 fw-normal">
+        <?= htmlspecialchars($status) ?>
+    </span>
+</h1>
+
                     </div>
                     <div class="btn-toolbar mb-2 mb-md-0 gap-2">
                         <button type="button" class="btn btn-outline-danger btn-sm rounded-pill"><i
@@ -140,9 +154,13 @@
                                         <div class="d-flex align-items-start gap-2">
                                             <i class="bi bi-geo-alt-fill text-danger mt-1"></i>
                                             <div>
-                                                <p class="mb-0 fw-bold">Jean Dupont</p>
-                                                <p class="mb-0 text-muted small">12 Rue de la Paix, 75000 Paris</p>
-                                                <p class="text-muted small">+33 6 12 34 56 78</p>
+                                                <p class="mb-0 fw-bold">
+    <?= htmlspecialchars($_SESSION['user']['name']) ?>
+</p>
+<p class="mb-0 text-muted small">
+    <?= htmlspecialchars($order->getPickupAddress()) ?>
+</p>
+
                                             </div>
                                         </div>
                                     </div>
@@ -151,9 +169,11 @@
                                         <div class="d-flex align-items-start gap-2">
                                             <i class="bi bi-geo-alt-fill text-success mt-1"></i>
                                             <div>
-                                                <p class="mb-0 fw-bold">Marie Curie</p>
-                                                <p class="mb-0 text-muted small">45 Av. des Champs, 75008 Paris</p>
-                                                <p class="text-muted small">+33 6 98 76 54 32</p>
+                                                <p class="mb-0 fw-bold">Destinataire</p>
+<p class="mb-0 text-muted small">
+    <?= htmlspecialchars($order->getDeliveryAddress()) ?>
+</p>
+
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +186,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <h6 class="text-uppercase text-muted small fw-bold">Prix Estimé</h6>
-                                        <p class="fw-medium text-primary fs-5">15.00€</p>
+<p class="fw-medium text-primary fs-5">
+    <?= number_format($order->getPrice(), 2) ?> €
+</p>
                                     </div>
                                     <div class="col-md-4">
                                         <h6 class="text-uppercase text-muted small fw-bold">Distance</h6>

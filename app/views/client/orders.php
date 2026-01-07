@@ -26,7 +26,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-white bg-white shadow-sm sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand text-primary fw-bold" href="../index.html">
+            <a class="navbar-brand text-primary fw-bold" href="index.php?route=client/dashboard">
                 <i class="bi bi-box-seam-fill me-2"></i>Delevri
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"

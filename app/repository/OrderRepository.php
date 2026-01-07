@@ -134,5 +134,38 @@ public function countPrice(int $clientID):float{
     return (float) $sql->fetchColumn();
 }
 
+public function findByIdAndClient(int $orderId, int $clientId): ?Order
+{
+    $stmt = $this->pdo->prepare(
+        "SELECT * FROM orders WHERE id = ? AND client_id = ?"
+    );
+    $stmt->execute([$orderId, $clientId]);
+
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$data) {
+        return null;
+    }
+
+    return new Order($data);
+}
+
+
+public  function softDelete(int $orderId,int $clientId): bool{
+    $sql = $this->pdo->prepare('
+        UPDATE orders 
+        SET is_delete = 1 
+        WHERE id = :id
+            AND client_id = :client_id
+            AND status = :status
+    ');
+    return $sql->execute([
+        'id'=>$orderId,
+        'client_id' => $clientId,
+        'status' => "pending"
+    ]);
+}
+
+
 
 }

@@ -64,6 +64,10 @@ switch ($route) {
         $controller = new ClientController($pdo);
         $controller->orderDetail();
         break;
+    case 'client/delete-order':
+        $controller = new ClientController($pdo);
+        $controller->deleteOrder();
+        break;
 
 
     default:
