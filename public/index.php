@@ -69,6 +69,15 @@ switch ($route) {
         $controller->deleteOrder();
         break;
 
+    case 'client/profile':
+        $controller = new ClientController($pdo);
+        $controller->profile();
+        break;
+    case 'client/setting':
+        $controller= new ClientController($pdo);
+        $controller->setting();
+        break;
+
 
     default:
         echo "Page 404";

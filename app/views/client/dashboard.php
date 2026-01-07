@@ -47,8 +47,8 @@
 
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
-                        <li><a class="dropdown-item" href="#">Mon Profil</a></li>
-                        <li><a class="dropdown-item" href="#">Paramètres</a></li>
+                        <li><a class="dropdown-item" href="index.php?route=client/profile">Mon Profil</a></li>
+                        <li><a class="dropdown-item" href="index.php?route=client/setting">Paramètres</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

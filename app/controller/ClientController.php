@@ -132,4 +132,13 @@ class ClientController {
 
 
 
+    public function profile(){
+        require_once "../app/views/client/profile.php";
+    }
+
+    public function setting(){
+        require_once "../app/views/client/settings.php";
+    }
+
+
    }
