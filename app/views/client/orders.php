@@ -138,10 +138,14 @@
                                             <span class="badge rounded-pill <?= $badge ?>"><?= htmlspecialchars($status) ?></span>
                                         </td>
                                         <td class="text-end pe-4">
-                                            <a href="index.php?route=client/order-detail&id=<?= $order->getId() ?>"
-                                               class="btn btn-sm btn-light rounded-circle text-primary">
-                                                <i class="bi bi-chevron-right"></i>
-                                            </a>
+    <?php if($order->getStatus()==='pending'):?>
+<a href="index.php?route=client/delete-order&id=<?= $order->getId() ?>"
+   class="btn btn-sm btn-light rounded-circle text-danger"
+   title="Supprimer"
+   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
+    <i class="bi bi-trash"></i>
+</a>
+<?php endif?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
